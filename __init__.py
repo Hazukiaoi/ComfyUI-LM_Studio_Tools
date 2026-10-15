@@ -202,6 +202,11 @@ class LMS_UnloadModel:
     FUNCTION = "unload"
     CATEGORY = "LM Studio Tools"
 
+    @classmethod
+    def IS_CHANGED(s, **kwargs):
+        # Unloading is a side effect, so never let ComfyUI serve this node from cache.
+        return float("nan")
+
     def unload(self, message_in=None, string_in=""):
         command = "lms.exe" if sys.platform == "win32" else "lms"
         full_command = [command, "unload", "--all"]
